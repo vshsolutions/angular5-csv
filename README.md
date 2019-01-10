@@ -64,6 +64,7 @@ new Angular5Csv(data, 'My Report');
 | **showTitle** | false      |   |
 | **useBom** | true      | If true, adds a BOM character at the start of the CSV |
 | **noDownload** | false      | If true, disables automatic download and returns only formatted CSV |
+| **nullToEmptyString** | false      | If true, all null values will be changed to empty strings |
 
 
 ## Options Example
@@ -78,7 +79,8 @@ new Angular5Csv(data, 'My Report');
     title: 'Your title',
     useBom: true,
     noDownload: true,
-    headers: ["First Name", "Last Name", "ID"]
+    headers: ["First Name", "Last Name", "ID"],
+    nullToEmptyString: true,
   };
 
   Angular5Csv(data, filename, options);
