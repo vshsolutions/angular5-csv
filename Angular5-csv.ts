@@ -9,6 +9,7 @@ export interface Options {
     useBom: boolean;
     headers: string[];
     noDownload: boolean;
+    nullToEmptyString: boolean;
 }
 
 export class CsvConfigConsts {
@@ -26,6 +27,7 @@ export class CsvConfigConsts {
     public static DEFAULT_USE_BOM = true;
     public static DEFAULT_HEADER: any[] = [];
     public static DEFAULT_NO_DOWNLOAD = false;
+    public static DEFAULT_NULL_TO_EMPTY_STRING = false;
 
 }
 
@@ -39,7 +41,8 @@ export const ConfigDefaults: Options = {
     title: CsvConfigConsts.DEFAULT_TITLE,
     useBom: CsvConfigConsts.DEFAULT_USE_BOM,
     headers: CsvConfigConsts.DEFAULT_HEADER,
-    noDownload: CsvConfigConsts.DEFAULT_NO_DOWNLOAD
+    noDownload: CsvConfigConsts.DEFAULT_NO_DOWNLOAD,
+    nullToEmptyString: CsvConfigConsts.DEFAULT_NULL_TO_EMPTY_STRING
 };
 
 export class Angular5Csv {
@@ -130,7 +133,7 @@ export class Angular5Csv {
         for (let i = 0; i < this.data.length; i++) {
             let row = "";
             for (const index in this.data[i]) {
-                row += this.formartData(this.data[i][index]) + this._options.fieldSeparator;
+                row += this.formatData(this.data[i][index]) + this._options.fieldSeparator;
             }
 
             row = row.slice(0, -1);
@@ -142,7 +145,7 @@ export class Angular5Csv {
      * Format Data
      * @param {any} data
      */
-    formartData(data: any) {
+    formatData(data: any) {
 
         if (this._options.decimalseparator === 'locale' && Angular5Csv.isFloat(data)) {
             return data.toLocaleString();
@@ -160,6 +163,13 @@ export class Angular5Csv {
             return data;
         }
 
+        if (this._options.nullToEmptyString) {
+            if(data === null) {
+                return data = '';
+            }
+            return data;
+        }
+        
         if (typeof data === 'boolean') {
             return data ? 'TRUE' : 'FALSE';
         }

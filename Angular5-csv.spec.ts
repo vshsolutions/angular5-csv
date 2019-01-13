@@ -51,4 +51,14 @@ describe('Component: Angular2Csv', () => {
         expect(labels[0]).toEqual('name');
         expect(labels[1]).toEqual('age');
     });
+
+    it('should return nulls as empty strings if the options is selected', () => {
+        let component = new Angular5Csv([{name: null, age: null}], 'My Report', {useBom: false, nullToEmptyString: true});
+        let csv = component['csv'];
+        let csv_rows = csv.split(CsvConfigConsts.EOL);
+        let first_row = csv_rows[0].replace(/"/g, '').split(',');
+        expect(first_row[0]).toEqual('');
+        expect(first_row[1]).toBe('');
+        
+    })
 });
