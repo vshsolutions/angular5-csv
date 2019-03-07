@@ -79,7 +79,9 @@ export class Angular5Csv {
         if (this._options.showTitle) {
             this.csv += this._options.title + '\r\n\n';
         }
-
+        
+        this.csv += 'sep=' + this._options.fieldSeparator + CsvConfigConsts.EOL;
+        
         this.getHeaders();
         this.getBody();
 
